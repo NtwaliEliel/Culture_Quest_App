@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: culturequest-api
+    runtime: node
+    buildCommand: |
+      cd culturequest-api
+      npm install
+      npx prisma generate
+      npm run build
+    startCommand: cd culturequest-api && npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false 
+      - key: JWT_SECRET
+        generateValue: true
+    healthCheckPath: /api 
