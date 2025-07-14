@@ -1,0 +1,132 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+/dist
+/build
+/.nest
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - JetBrains (WebStorm, IntelliJ, etc)
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+
+# IDE - Visual Studio
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Testing
+/coverage
+/.nyc_output
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+*.pem
+
+# Prisma
+/prisma/migrations/
+/prisma/*.db
+/prisma/*.db-journal
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+*.temp
+.temp/
+.tmp/
+tmp/
+temp/
+
+# Cache directories
+.cache/
+.eslintcache
+.stylelintcache
+*.seed
+*.pid
+*.pid.lock
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+
+# Serverless
+.serverless/
+.dynamodb/
+
+# Misc
+.DS_Store
+*.pem
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Project specific
+uploads/
+public/uploads/
+dist/
+build/
+.docker/
+docker-compose.override.yml
+
+# Documentation
+/docs/api/
+/docs/coverage/
+
+# Debug
+.debug/
+debug.log
+debug/
+
+# Local development
+*.local
+local.*
