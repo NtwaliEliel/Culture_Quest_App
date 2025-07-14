@@ -1,0 +1,1 @@
+web: cd culturequest-api && npm run start:prod
