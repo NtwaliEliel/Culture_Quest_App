@@ -1,0 +1,11 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm install && npm run prisma:generate && npm run build"
+
+[deploy]
+startCommand = "npm run start:prod"
+healthcheckPath = "/api"
+restartPolicyType = "ON_FAILURE"
+
+[service]
+name = "culturequest-api"
