@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 String            @id @default(uuid())
+  name               String
+  email              String            @unique
+  password           String
+  role               String
+  languages          String[]
+  city               String?
+  country            String?
+  coordinates        Json?             // Storing latitude and longitude
+  timezone           String?
+  notificationsEnabled Boolean         @default(true)
+  offlineAccessEnabled Boolean         @default(true)
+  preferredLanguage   String?
+  storiesSubmitted    Int              @default(0)
+  eventsAttended      Int              @default(0)
+  lastActive          DateTime?
+  favoriteStories     Story[]          @relation("UserFavoriteStories")
+  favoriteEvents      Event[]          @relation("UserFavoriteEvents")
+  favoriteArtisans    Artisan[]        @relation("UserFavoriteArtisans")
+  downloadedContent   Json[]           // Array of downloaded content IDs and metadata
+  createdAt          DateTime          @default(now())
+  verifiedArtisans   Artisan[]        @relation("ArtisanVerifier")
+  verifiedStories    Story[]          @relation("StoryVerifier")
+  moderatedContent   ContentModeration[] @relation("ContentModerator")
+  feedback           UserFeedback[]
+  narrations         Story[]          @relation("StoryNarrator")
+}
+
+model Artisan {
+  id               String    @id @default(uuid())
+  name             String
+  profession       String
+  address          String?
+  city             String
+  coordinates      Json      // Storing latitude and longitude
+  workingHours     Json      // Storing working hours as structured data
+  description      String
+  specialties      String[]
+  gallery          Json[]    // Array of image URLs and metadata
+  phone            String?
+  email            String?
+  whatsapp         String?
+  preferredContact String?
+  isVerified       Boolean   @default(false)
+  verifiedById     String?
+  verifier         User?     @relation("ArtisanVerifier", fields: [verifiedById], references: [id])
+  verificationDate DateTime?
+  documents        String[]  // Array of document URLs
+  viewCount        Int       @default(0)
+  contactCount     Int       @default(0)
+  rating           Float     @default(0)
+  crafts           Json[]    // Array of craft details
+  createdAt        DateTime  @default(now())
+  favoritedBy      User[]    @relation("UserFavoriteArtisans")
+  events           Event[]   @relation("EventArtisans")
+}
+
+model Story {
+  id                String    @id @default(uuid())
+  title             String
+  type              String
+  text              String?
+  audioUrl          String?
+  videoUrl          String?
+  transcription     String?
+  language          String
+  dialect           String?
+  region            String?
+  period            String?
+  culturalContext   String?
+  narratorId        String?
+  narrator          User?     @relation("StoryNarrator", fields: [narratorId], references: [id])
+  verificationStatus String   @default("pending")
+  verifiedById      String?
+  verifier          User?     @relation("StoryVerifier", fields: [verifiedById], references: [id])
+  verificationDate  DateTime?
+  verificationNotes String?
+  views             Int       @default(0)
+  downloads         Int       @default(0)
+  shares            Int       @default(0)
+  averageRating     Float     @default(0)
+  tags              String[]
+  relatedStories    Story[]   @relation("RelatedStories")
+  relatedToStories  Story[]   @relation("RelatedStories")
+  createdAt         DateTime  @default(now())
+  favoritedBy       User[]    @relation("UserFavoriteStories")
+}
+
+model Event {
+  id                 String    @id @default(uuid())
+  title              String
+  description        String
+  venue              String
+  address            String
+  coordinates        Json      // Storing latitude and longitude
+  accessInstructions String?
+  startDate          DateTime
+  endDate            DateTime
+  timezone           String
+  sessions           Json[]    // Array of session details
+  category           String
+  culturalSignificance String?
+  capacity           Int?
+  images             String[]  // Array of image URLs
+  videos             String[]  // Array of video URLs
+  brochureUrl        String?
+  interestedCount    Int       @default(0)
+  attendingCount     Int       @default(0)
+  sharesCount        Int       @default(0)
+  createdAt          DateTime  @default(now())
+  artisans           Artisan[] @relation("EventArtisans")
+  favoritedBy        User[]    @relation("UserFavoriteEvents")
+}
+
+model Analytics {
+  id          String   @id @default(uuid())
+  type        String
+  value       Float
+  timestamp   DateTime @default(now())
+  metadata    Json?
+}
+
+model ContentModeration {
+  id           String   @id @default(uuid())
+  contentType  String
+  contentId    String
+  status       String
+  moderatorId  String
+  moderator    User     @relation("ContentModerator", fields: [moderatorId], references: [id])
+  notes        String?
+  timestamp    DateTime @default(now())
+}
+
+model UserFeedback {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        String
+  category    String
+  description String
+  status      String   @default("pending")
+  priority    Int      @default(1)
+  createdAt   DateTime @default(now())
+} 
