@@ -35,6 +35,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  // Add "/" route to welcome users
+  app.getHttpAdapter().get('/', (req, res) => {
+    res.send('Welcome to the CultureQuest backend application!');
+  });
+
   // Start the application
   const port = process.env.PORT || 3000;
   await app.listen(port);
