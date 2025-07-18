@@ -38,6 +38,8 @@ class ExploreYourRootsApp extends StatelessWidget {
       home: const WelcomeScreen(),
       routes: {
         '/home': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
         '/explore': (context) => const ExploreScreen(),
         '/events': (context) => const EventsScreen(),
         '/artists': (context) => const ArtistsScreen(),
