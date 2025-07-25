@@ -9,13 +9,13 @@ export class StoriesService {
   constructor(private prisma: PrismaService) {}
 
   async create(createStoryDto: CreateStoryDto) {
-    const { relatedStories, ...storyData } = createStoryDto;
+    const { relatedStories,narratorId, ...storyData } = createStoryDto;
     
     const data: Prisma.StoryCreateInput = {
       ...storyData,
       verificationStatus: 'pending',
-      narrator: storyData.narratorId ? {
-        connect: { id: storyData.narratorId }
+      narrator: narratorId ? {
+        connect: { id: narratorId }
       } : undefined,
       relatedStories: relatedStories ? {
         connect: relatedStories.map(id => ({ id }))
