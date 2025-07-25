@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/welcome_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/explore_screen.dart';
@@ -36,6 +38,8 @@ class ExploreYourRootsApp extends StatelessWidget {
       home: const WelcomeScreen(),
       routes: {
         '/home': (context) => const HomeScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
         '/explore': (context) => const ExploreScreen(),
         '/events': (context) => const EventsScreen(),
         '/artists': (context) => const ArtistsScreen(),
